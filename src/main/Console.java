@@ -128,7 +128,8 @@ class DetectFaceDemo {
         System.out.println("Height for Thing2: " + thing2.y);
         Core.circle(imagegray,new Point(thing2.x,thing2.y),5,new Scalar(0,255,0),1);
         Core.circle(imagegray,new Point(239,111),5,new Scalar(255,0,0),1);
-        thing = new Point3((thing2.x - 640/2), (thing2.y - 488/2),0);
+        thing = new Point3((rect.x + rect.width/2), (rect.y + rect.height/2),0);
+        Core.circle(imagegray,new Point((rect.x + rect.width/2), (rect.y + rect.height/2)),5,new Scalar(0,255,255),1);
         Yrot = (thing.y)/(488/2)*22.5;
         distance = (DeltaHeight / (Math.tan((Kinect_Angle + Yrot))))/12;
         
