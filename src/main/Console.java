@@ -50,8 +50,9 @@ class DetectFaceDemo {
 	double Bracket_Height = 31.6875;
 	double posX = 0;
 	double posY = 0;
-	Moments moments = new Moments();
-	Point thing2;
+	
+	
+	
 	
 	double DeltaHeight = Target_Height - (Bracket_Height + Sensor_Height);
 	double Kinect_Distance = Bracket_Distance - Sensor_Distance;
@@ -59,6 +60,8 @@ class DetectFaceDemo {
 	double Kinect_Angle = (Math.atan2(DeltaHeight,Kinect_Distance)*180/Math.PI);
 	
 	Point3 thing;
+	Moments moments = new Moments();
+	Point thing2;
 	
     System.out.println("\nRunning DetectFaceDemo");
     Mat element = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(n,n));
@@ -93,6 +96,7 @@ class DetectFaceDemo {
         // Get bounding rect of contour
         //Imgproc.HuMoments(moments,new Mat());
         //posY = moments.m01/Imgproc.contourArea(contours.get(i));
+        
         Rect rect = Imgproc.boundingRect(points);
         width = rect.width;
         height = rect.height;
@@ -100,7 +104,7 @@ class DetectFaceDemo {
         
         //if(Math.abs(Imgproc.contourArea(contours.get(i))) > 3500 && Math.abs(Imgproc.contourArea(contours.get(i))) < 7000 && Imgproc.isContourConvex(points)){
         color = (color+1)*4;
-        if(Math.abs(ratio) > 2.5 && Math.abs(ratio) < 5.5){
+        if(Math.abs(ratio) > 2.5 && Math.abs(ratio) < 4.5){
         	
         System.out.println(rect);
         System.out.println("Pixel Width: " + width);
@@ -108,17 +112,20 @@ class DetectFaceDemo {
         
          // draw enclosing rectangle (all same color, but you could use variable i to make them unique)
         Core.rectangle(imagegray,rect.tl(), rect.br(), new Scalar(255, 100, 0),10, 8,0);
-        //System.out.println("Focal Length: " + focal);
-        //distance = ((54/12)*focal)/width;
-        //distancewidth = (((54/12)*640/(rect.width)))/2;
-        //distance = (distancewidth)/(0.455);
-        thing2 = new Point((rect.x + rect.width/2)/Imgproc.contourArea(contours.get(i)), (rect.y+rect.height/2)/Imgproc.contourArea(contours.get(i)));
-        thing = new Point3((thing2.x - 640/2), -(thing2.y - 488/2),0);
+        
+//        System.out.println("Focal Length: " + focal);
+//        distance = ((54/12)*focal)/width;
+//        distancewidth = (((54/12)*640/(rect.width)))/2;
+//        distance = (distancewidth)/(0.455);
 //        System.out.println(thing.y);
 //        System.out.println(rect.y);
 //        System.out.println(rect.height);
-        //focal = (17.49*rect.y*0.6125) /(12*488);
-        //distance = ((2.8 * 300 * 488)/(rect.y * Sensor_Height));
+//        focal = (17.49*rect.y*0.6125) /(12*488);
+//        distance = ((2.8 * 300 * 488)/(rect.y * Sensor_Height));
+        
+        // Distance Stuff
+        thing2 = new Point((rect.x + rect.width/2)/Imgproc.contourArea(contours.get(i)), (rect.y+rect.height/2)/Imgproc.contourArea(contours.get(i)));
+        thing = new Point3((thing2.x - 640/2), -(thing2.y - 488/2),0);
         Yrot = (thing.y)/(488/2)*22.5;
         distance = (DeltaHeight / (Math.tan((Kinect_Angle + Yrot)*Math.PI/180)))/12;
         
