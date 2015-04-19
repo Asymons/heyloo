@@ -57,7 +57,7 @@ class DetectFaceDemo {
 	double DeltaHeight = Target_Height - (Bracket_Height + Sensor_Height);
 	double Kinect_Distance = Bracket_Distance - Sensor_Distance;
 	double Yrot;
-	double Kinect_Angle = (Math.atan2(DeltaHeight,Kinect_Distance)*180/Math.PI);
+	double Kinect_Angle = Math.toDegrees(Math.atan2(DeltaHeight,Kinect_Distance));
 	
 	Point3 thing;
 	Moments moments = new Moments();
@@ -124,16 +124,19 @@ class DetectFaceDemo {
 //        distance = ((2.8 * 300 * 488)/(rect.y * Sensor_Height));
         
         // Distance Stuff
-        thing2 = new Point((rect.x + rect.width/2)/Imgproc.contourArea(contours.get(i)), (rect.y+rect.height/2)/Imgproc.contourArea(contours.get(i)));
-        thing = new Point3((thing2.x - 640/2), -(thing2.y - 488/2),0);
+        thing2 = new Point((rect.width/2), -(rect.height/2));
+        System.out.println("Height for Thing2: " + thing2.y);
+        Core.circle(imagegray,new Point(thing2.x,thing2.y),5,new Scalar(0,255,0),1);
+        Core.circle(imagegray,new Point(239,111),5,new Scalar(255,0,0),1);
+        thing = new Point3((thing2.x - 640/2), (thing2.y - 488/2),0);
         Yrot = (thing.y)/(488/2)*22.5;
-        distance = (DeltaHeight / (Math.tan((Kinect_Angle + Yrot)*Math.PI/180)))/12;
+        distance = (DeltaHeight / (Math.tan((Kinect_Angle + Yrot))))/12;
         
         System.out.println("Distance: " + distance);
         
         	if(Math.abs(ratio) > 2.5 && Math.abs(ratio) < 5  ){
         		
-        		Core.circle(imagegray,new Point(rect.x + rect.width/2, rect.y+rect.height/2), 5, new Scalar(255,0,0),1);
+        		//Core.circle(imagegray,new Point(rect.x + rect.width/2, rect.y+rect.height/2), 5, new Scalar(255,0,0),1);
         	}
        }
     }
